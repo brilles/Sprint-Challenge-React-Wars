@@ -5,7 +5,6 @@ const StarWarsChars = props => {
   return (
     <div className="character">
       <h2 className="name">{props.character.name}</h2>
-      <img src={props.character.url} alt={`img of ${props.character.name}`} />
       {/* <img src={props.character.url} alt="" /> */}
       {/* 1. Gets the entries => keys and values of the starwars character
           through props. 2. Trims the front and truncates via .slice() 3. assigns
