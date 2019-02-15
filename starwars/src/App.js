@@ -6,7 +6,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      starwarsChars: []
+      starwarsChars: [],
+      next: "",
+      prev: ""
     };
   }
 
@@ -24,18 +26,43 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
-        this.setState({ starwarsChars: data.results });
+        console.log(data);
+        this.setState({
+          starwarsChars: data.results,
+          next: data.next,
+          prev: data.previous
+        });
       })
       .catch(err => {
         throw new Error(err);
       });
   };
 
+  prevPage = () => {
+    this.getCharacters(this.state.prev);
+  };
+
+  nextPage = () => {
+    this.getCharacters(this.state.next);
+  };
+
   render() {
+    let button1;
+    let button2;
+    if (this.state.prev !== null) {
+      button1 = <button onClick={this.prevPage}>Previous Page</button>;
+    }
+
+    if (this.state.next !== null) {
+      button2 = <button onClick={this.nextPage}>Next Page</button>; 
+       } 
     return (
       <div className="App">
         <div className="Header">
           <h1>React Wars</h1>
+          <div className="pagination">
+            {button1}{button2}
+          </div>
         </div>
         <section className="character-list">
           <DisplayChars starwarsChars={this.state.starwarsChars} />

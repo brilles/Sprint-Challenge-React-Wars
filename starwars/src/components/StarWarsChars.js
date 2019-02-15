@@ -1,5 +1,6 @@
 import React from "react";
 import "./StarWarsChars.css";
+
 const StarWarsChars = props => {
   // const entries = Object.entries(props.character);
   return (
