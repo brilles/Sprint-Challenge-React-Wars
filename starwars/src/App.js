@@ -38,23 +38,15 @@ class App extends Component {
       });
   };
 
-  prevPage = () => {
-    this.getCharacters(this.state.prev);
-  };
-
-  nextPage = () => {
-    this.getCharacters(this.state.next);
-  };
-
   render() {
     let button1;
     let button2;
     if (this.state.prev !== null) {
-      button1 = <button onClick={this.prevPage}>Previous Page</button>;
+      button1 = <button onClick={() => this.getCharacters(this.state.prev)}>Previous Page</button>;
     }
 
     if (this.state.next !== null) {
-      button2 = <button onClick={this.nextPage}>Next Page</button>; 
+      button2 = <button onClick={() => this.getCharacters(this.state.next)}>Next Page</button>; 
        } 
     return (
       <div className="App">
