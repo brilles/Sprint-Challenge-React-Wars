@@ -1,16 +1,20 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import DisplayChars from "./components/DisplayChars";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      starwarsChars: []
+      starwarsChars: [],
+      next: "",
+      prev: ""
     };
   }
 
+  // calls an open source API and saves the results of that API on state
   componentDidMount() {
-    this.getCharacters('https://swapi.co/api/people');
+    this.getCharacters("https://swapi.co/api/people");
   }
 
   getCharacters = URL => {
@@ -22,7 +26,12 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
-        this.setState({ starwarsChars: data.results });
+        console.log(data);
+        this.setState({
+          starwarsChars: data.results,
+          next: data.next,
+          prev: data.previous
+        });
       })
       .catch(err => {
         throw new Error(err);
@@ -30,9 +39,26 @@ class App extends Component {
   };
 
   render() {
+    let button1;
+    let button2;
+    if (this.state.prev !== null) {
+      button1 = <button onClick={() => this.getCharacters(this.state.prev)}>Previous Page</button>;
+    }
+
+    if (this.state.next !== null) {
+      button2 = <button onClick={() => this.getCharacters(this.state.next)}>Next Page</button>; 
+       } 
     return (
       <div className="App">
-        <h1 className="Header">React Wars</h1>
+        <div className="Header">
+          <h1>React Wars</h1>
+          <div className="pagination">
+            {button1}{button2}
+          </div>
+        </div>
+        <section className="character-list">
+          <DisplayChars starwarsChars={this.state.starwarsChars} />
+        </section>
       </div>
     );
   }
